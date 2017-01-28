@@ -90,9 +90,12 @@ public class StorageFile {
      * Saves all data to this storage file.
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
+     * @throws FileNotFoundException if there is no file for storing data.
      */
-    public void save(AddressBook addressBook) throws StorageOperationException {
-
+    public void save(AddressBook addressBook) throws StorageOperationException, FileNotFoundException {
+    	if(!this.isFileExist()){
+    		throw new FileNotFoundException("Founding file error");
+    	}
         /* Note: Note the 'try with resource' statement below.
          * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
          */
@@ -116,7 +119,8 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
-    public AddressBook load() throws StorageOperationException {
+    public AddressBook load() throws StorageOperationException, FileNotFoundException{
+    	
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
 
@@ -151,6 +155,10 @@ public class StorageFile {
 
     public String getPath() {
         return path.toString();
+    }
+    
+    public boolean isFileExist(){
+    	return path.toFile().exists();
     }
 
 }
