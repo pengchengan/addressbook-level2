@@ -75,18 +75,74 @@ public class Formatter {
      * Echos the command back to the user.
      * @return command (full line) entered by the user
      */
-    public String getUserCommand(Scanner in, PrintStream out) {
-        //out.print(LINE_PREFIX + "Enter command: ");
+    public String formatUserCommand(Scanner in) {    	
         String fullInputLine = in.nextLine();
-
-        // silently consume all ignored lines
         while (shouldIgnore(fullInputLine)) {
             fullInputLine = in.nextLine();
         }
-
-        //showToUser("[Command entered:" + fullInputLine + "]");
         return fullInputLine;
     }
 
+    public String formatWelcomeMessage(String storageFilePath) {
+        String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
+        return storageFileInfo;
+        
+    }
+    
+    /** Formats one message to the user */
+    public String formatShowToUser(String message) {
+            String formatedMessage = LINE_PREFIX + message.replace("\n", LS + LINE_PREFIX);
+            return formatedMessage;
+    }
+    
+    /**
+     * Shows the result of a command execution to the user. Includes additional formatting to demarcate different
+     * command execution segments.
+     */
+    public String formatShowResultToUser(CommandResult result) {
+        final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
+        if (resultPersons.isPresent()) {
+        	return formatShowPersonListView(resultPersons.get());
+        }else{
+        	return null;
+        }
+        
+    }
+    
+    /**
+     * Shows a list of persons to the user, formatted as an indexed list.
+     * Private contact details are hidden.
+     */
+    private String formatShowPersonListView(List<? extends ReadOnlyPerson> persons) {
+        final List<String> formattedPersons = new ArrayList<>();
+        for (ReadOnlyPerson person : persons) {
+            formattedPersons.add(person.getAsTextHidePrivate());
+        }
+        return showToUserAsIndexedList(formattedPersons);
+    }
 
+    /** Shows a list of strings to the user, formatted as an indexed list. */
+    private String showToUserAsIndexedList(List<String> list) {
+        return getIndexedListForViewing(list);
+    }
+
+    /** Formats a list of strings as a viewable indexed list. */
+    private static String getIndexedListForViewing(List<String> listItems) {
+        final StringBuilder formatted = new StringBuilder();
+        int displayIndex = 0 + DISPLAYED_INDEX_OFFSET;
+        for (String listItem : listItems) {
+            formatted.append(getIndexedListItem(displayIndex, listItem)).append("\n");
+            displayIndex++;
+        }
+        return formatted.toString();
+    }
+
+    /**
+     * Formats a string as a viewable indexed list item.
+     *
+     * @param visibleIndex visible index for this listing
+     */
+    private static String getIndexedListItem(int visibleIndex, String listItem) {
+        return String.format(MESSAGE_INDEXED_LIST_ITEM, visibleIndex, listItem);
+    }
 }

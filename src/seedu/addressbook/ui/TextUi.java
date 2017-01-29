@@ -79,25 +79,12 @@ public class TextUi {
      * Ignores empty, pure whitespace, and comment lines.
      * Echos the command back to the user.
      * @return command (full line) entered by the user
-     */
-    /*
-    public String getUserCommand() {
-        out.print(LINE_PREFIX + "Enter command: ");
-        String fullInputLine = in.nextLine();
-
-        // silently consume all ignored lines
-        while (shouldIgnore(fullInputLine)) {
-            fullInputLine = in.nextLine();
-        }
-
-        showToUser("[Command entered:" + fullInputLine + "]");
-        return fullInputLine;
-    }*/
+     */    
     
     public String getUserCommand() {
         out.print(LINE_PREFIX + "Enter command: ");
        
-        String fullInputLine = formatter.getUserCommand(in, out);
+        String fullInputLine = formatter.formatUserCommand(in);
 
         showToUser("[Command entered:" + fullInputLine + "]");
         return fullInputLine;
@@ -105,7 +92,7 @@ public class TextUi {
 
 
     public void showWelcomeMessage(String version, String storageFilePath) {
-        String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
+    	String storageFileInfo = formatter.formatWelcomeMessage(storageFilePath);
         showToUser(
                 DIVIDER,
                 DIVIDER,
@@ -128,7 +115,7 @@ public class TextUi {
     /** Shows message(s) to the user */
     public void showToUser(String... message) {
         for (String m : message) {
-            out.println(LINE_PREFIX + m.replace("\n", LS + LINE_PREFIX));
+            out.println(formatter.formatShowToUser(m));
         }
     }
 
@@ -136,14 +123,28 @@ public class TextUi {
      * Shows the result of a command execution to the user. Includes additional formatting to demarcate different
      * command execution segments.
      */
+    /*
     public void showResultToUser(CommandResult result) {
         final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
         if (resultPersons.isPresent()) {
             showPersonListView(resultPersons.get());
         }
         showToUser(result.feedbackToUser, DIVIDER);
+    }*/
+    
+    /**
+     * Shows the result of a command execution to the user. Includes additional formatting to demarcate different
+     * command execution segments.
+     */
+    public void showResultToUser(CommandResult result) {
+    	String formattedResult = formatter.formatShowResultToUser(result);
+    	Optional<String> option = Optional.ofNullable(formattedResult);
+    	if(option.isPresent()){    		
+    		showToUser(formattedResult.toString());
+    	}
+        showToUser(result.feedbackToUser, DIVIDER);
     }
-
+    
     /**
      * Shows a list of persons to the user, formatted as an indexed list.
      * Private contact details are hidden.
