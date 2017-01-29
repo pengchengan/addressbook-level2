@@ -37,7 +37,7 @@ public class TextUi {
 
     private final Scanner in;
     private final PrintStream out;
-
+    private Formatter  formatter;
     public TextUi() {
         this(System.in, System.out);
     }
@@ -45,8 +45,14 @@ public class TextUi {
     public TextUi(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
+        this.formatter = new Formatter();
     }
 
+    /*
+    public TextUi(InputStream in, PrintStream out) {
+    	formatter= new Formatter(System.in, System.out);
+    }
+    */
     /**
      * Returns true if the user input line should be ignored.
      * Input should be ignored if it is parsed as a comment, is only whitespace, or is empty.
@@ -74,6 +80,7 @@ public class TextUi {
      * Echos the command back to the user.
      * @return command (full line) entered by the user
      */
+    /*
     public String getUserCommand() {
         out.print(LINE_PREFIX + "Enter command: ");
         String fullInputLine = in.nextLine();
@@ -82,6 +89,15 @@ public class TextUi {
         while (shouldIgnore(fullInputLine)) {
             fullInputLine = in.nextLine();
         }
+
+        showToUser("[Command entered:" + fullInputLine + "]");
+        return fullInputLine;
+    }*/
+    
+    public String getUserCommand() {
+        out.print(LINE_PREFIX + "Enter command: ");
+       
+        String fullInputLine = formatter.getUserCommand(in, out);
 
         showToUser("[Command entered:" + fullInputLine + "]");
         return fullInputLine;
