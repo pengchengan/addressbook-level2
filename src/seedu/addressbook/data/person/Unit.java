@@ -11,23 +11,23 @@ public class Unit {
     private boolean isPrivate;
 
     /**
-     * Validates given address.
+     * Validates given unit.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given unit string is invalid.
      */
     public Unit(String unit, boolean isPrivate) throws IllegalValueException {
         String trimmedUnit = unit.trim();
         this.isPrivate = isPrivate;
-        if (!isValidBlock(trimmedUnit)) {
+        if (!isValidUnit(trimmedUnit)) {
             throw new IllegalValueException(MESSAGE_UNIT_CONSTRAINTS);
         }
         this.value = trimmedUnit;
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person unit.
      */
-    public static boolean isValidBlock(String test) {
+    public static boolean isValidUnit(String test) {
         return test.matches(UNIT_VALIDATION_REGEX);
     }
 

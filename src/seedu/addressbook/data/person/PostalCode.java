@@ -11,23 +11,23 @@ public class PostalCode {
     private boolean isPrivate;
 
     /**
-     * Validates given address.
+     * Validates given postalcode.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given postalcode string is invalid.
      */
     public PostalCode(String postalCode, boolean isPrivate) throws IllegalValueException {
         String trimmedPostalCode = postalCode.trim();
         this.isPrivate = isPrivate;
-        if (!isValidBlock(trimmedPostalCode)) {
+        if (!isValidPostalcode(trimmedPostalCode)) {
             throw new IllegalValueException(MESSAGE_PSOTALCODE_CONSTRAINTS);
         }
         this.value = trimmedPostalCode;
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person postalcode.
      */
-    public static boolean isValidBlock(String test) {
+    public static boolean isValidPostalcode(String test) {
         return test.matches(PSOTALCODE_VALIDATION_REGEX);
     }
 

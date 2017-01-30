@@ -11,23 +11,23 @@ public class Street {
     private boolean isPrivate;
 
     /**
-     * Validates given address.
+     * Validates given street.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given street string is invalid.
      */
     public Street(String street, boolean isPrivate) throws IllegalValueException {
         String trimmedStreet = street.trim();
         this.isPrivate = isPrivate;
-        if (!isValidBlock(trimmedStreet)) {
+        if (!isValidStreet(trimmedStreet)) {
             throw new IllegalValueException(MESSAGE_STREET_CONSTRAINTS);
         }
         this.value = trimmedStreet;
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person street.
      */
-    public static boolean isValidBlock(String test) {
+    public static boolean isValidStreet(String test) {
         return test.matches(STREET_VALIDATION_REGEX);
     }
 

@@ -11,9 +11,9 @@ public class Block {
     private boolean isPrivate;
 
     /**
-     * Validates given address.
+     * Validates given block.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given block string is invalid.
      */
     public Block(String block, boolean isPrivate) throws IllegalValueException {
         String trimmedBlock = block.trim();
@@ -25,7 +25,7 @@ public class Block {
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person block.
      */
     public static boolean isValidBlock(String test) {
         return test.matches(BLOCK_VALIDATION_REGEX);
