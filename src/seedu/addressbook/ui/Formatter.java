@@ -16,6 +16,10 @@ import java.util.Scanner;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+/**
+ * Formatter for the application
+ *
+ */
 public class Formatter {
 
     /** A decorative prefix added to the beginning of lines printed by AddressBook */
@@ -35,19 +39,10 @@ public class Formatter {
 
     /** Format of a comment input line. Comment lines are silently consumed when reading user input. */
     private static final String COMMENT_LINE_FORMAT_REGEX = "#.*";
-
-    //private final Scanner in;
-    //private final PrintStream out;
     
     public Formatter() {
         
     }
-    /*
-    public Formatter(InputStream in, PrintStream out) {
-        this.in = new Scanner(in);
-        this.out = out;
-    }
-	*/
     /**
      * Returns true if the user input line should be ignored.
      * Input should be ignored if it is parsed as a comment, is only whitespace, or is empty.
@@ -72,7 +67,9 @@ public class Formatter {
     /**
      * Prompts for the command and reads the text entered by the user.
      * Ignores empty, pure whitespace, and comment lines.
-     * Echos the command back to the user.
+     * Return the command back to TextUi.
+     * 
+     * @param in
      * @return command (full line) entered by the user
      */
     public String formatUserCommand(Scanner in) {    	
@@ -83,21 +80,36 @@ public class Formatter {
         return fullInputLine;
     }
 
+    /**
+     * Format the storageFileInfo in WelcomeMessage
+     * 
+     * @param storageFilePath
+     * @return formatted storageFileInfo
+     */
     public String formatWelcomeMessage(String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
         return storageFileInfo;
         
     }
     
-    /** Formats one message to the user */
+
+    /**
+     * Formats one message
+     * 
+     * @param message
+     * @return formated message
+     */
     public String formatShowToUser(String message) {
             String formatedMessage = LINE_PREFIX + message.replace("\n", LS + LINE_PREFIX);
             return formatedMessage;
     }
     
     /**
-     * Shows the result of a command execution to the user. Includes additional formatting to demarcate different
+     * Formats the result of a command execution to the user. Includes additional formatting to demarcate different
      * command execution segments.
+	 *	
+     * @param result raw command results 
+     * @return formatShowPersonListView
      */
     public String formatShowResultToUser(CommandResult result) {
         final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
@@ -110,8 +122,11 @@ public class Formatter {
     }
     
     /**
-     * Shows a list of persons to the user, formatted as an indexed list.
+     * Formats a list of persons to the user, formatted as an indexed list.
      * Private contact details are hidden.
+	 *
+     * @param persons
+     * @return showToUserAsIndexedList
      */
     private String formatShowPersonListView(List<? extends ReadOnlyPerson> persons) {
         final List<String> formattedPersons = new ArrayList<>();
@@ -121,12 +136,20 @@ public class Formatter {
         return showToUserAsIndexedList(formattedPersons);
     }
 
-    /** Shows a list of strings to the user, formatted as an indexed list. */
+    /** formats a list of strings to the user, formatted as an indexed list. 
+     * 
+     * @param list
+     * @return getIndexedListForViewing
+     */
     private String showToUserAsIndexedList(List<String> list) {
         return getIndexedListForViewing(list);
     }
 
-    /** Formats a list of strings as a viewable indexed list. */
+    /** Formats a list of strings as a viewable indexed list.
+     *
+     * @param listItems
+     * @return IndexedListForViewing
+     */
     private static String getIndexedListForViewing(List<String> listItems) {
         final StringBuilder formatted = new StringBuilder();
         int displayIndex = 0 + DISPLAYED_INDEX_OFFSET;
@@ -141,6 +164,7 @@ public class Formatter {
      * Formats a string as a viewable indexed list item.
      *
      * @param visibleIndex visible index for this listing
+     * @return IndexedListItem
      */
     private static String getIndexedListItem(int visibleIndex, String listItem) {
         return String.format(MESSAGE_INDEXED_LIST_ITEM, visibleIndex, listItem);
