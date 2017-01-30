@@ -118,6 +118,7 @@ public class StorageFile {
      * Loads data from this storage file.
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
+     * @throws FileNotFoundException if there were errors finding files 
      */
     public AddressBook load() throws StorageOperationException, FileNotFoundException{
     	
