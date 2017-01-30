@@ -48,11 +48,6 @@ public class TextUi {
         this.formatter = new Formatter();
     }
 
-    /*
-    public TextUi(InputStream in, PrintStream out) {
-    	formatter= new Formatter(System.in, System.out);
-    }
-    */
     /**
      * Returns true if the user input line should be ignored.
      * Input should be ignored if it is parsed as a comment, is only whitespace, or is empty.
@@ -83,13 +78,10 @@ public class TextUi {
     
     public String getUserCommand() {
         out.print(LINE_PREFIX + "Enter command: ");
-       
         String fullInputLine = formatter.formatUserCommand(in);
-
         showToUser("[Command entered:" + fullInputLine + "]");
         return fullInputLine;
     }
-
 
     public void showWelcomeMessage(String version, String storageFilePath) {
     	String storageFileInfo = formatter.formatWelcomeMessage(storageFilePath);
@@ -107,7 +99,6 @@ public class TextUi {
         showToUser(MESSAGE_GOODBYE, DIVIDER, DIVIDER);
     }
 
-
     public void showInitFailedMessage() {
         showToUser(MESSAGE_INIT_FAILED, DIVIDER, DIVIDER);
     }
@@ -118,8 +109,6 @@ public class TextUi {
             out.println(formatter.formatShowToUser(m));
         }
     }
-
-    
     
     /**
      * Shows the result of a command execution to the user. Includes additional formatting to demarcate different
