@@ -6,6 +6,7 @@ import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.data.tag.UniqueTagList.*;
 import seedu.addressbook.data.tag.Tag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
-
+    private ArrayList<Tagging> tagging;
     /**
      * Creates an empty address book.
      */
@@ -44,6 +45,7 @@ public class AddressBook {
         for (Person p : allPersons) {
             syncTagsWithMasterList(p);
         }
+        tagging = new ArrayList<Tagging>();
     }
 
     /**
@@ -87,7 +89,7 @@ public class AddressBook {
      * @throws DuplicateTagException if an equivalent tag already exists.
      */
     public void addTag(Tag toAdd) throws DuplicateTagException {
-        allTags.add(toAdd);
+    	allTags.add(toAdd);
     }
 
     /**
@@ -150,5 +152,11 @@ public class AddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                         && this.allPersons.equals(((AddressBook) other).allPersons)
                         && this.allTags.equals(((AddressBook) other).allTags));
+    }
+    
+    public void printAllTags(){
+    	for(Tagging taggingIterator : tagging ){
+    		System.out.println(taggingIterator.toString());
+    	}
     }
 }
