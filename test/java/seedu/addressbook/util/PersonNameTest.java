@@ -17,6 +17,7 @@ import seedu.addressbook.data.person.Name;
  * This class is used to test isSimilar function in class Name
  */
 public class PersonNameTest {
+	
 	@Test
 	public void TestIdentical(){
 		try {
@@ -27,4 +28,27 @@ public class PersonNameTest {
 			System.out.println(e);
 		}
 	}
+	
+	@Test
+	public void TestDifferentOrder(){
+		try {
+			assertTrue(new Name("a  ,a,  a").isSimilar(new Name("aa  a")));
+			assertTrue(new Name("a a b").isSimilar(new Name(" b a a ")));
+			assertTrue(new Name("a  b a  b a b c").isSimilar(new Name("ab ab ; ;ab")));
+		} catch(IllegalValueException e) {
+			System.out.println(e);
+		}
+	}
+	
+	@Test
+	public void TestFewError(){
+		try {
+			assertTrue(new Name("aaabb").isSimilar(new Name("aaa")));
+			assertTrue(new Name("a a b").isSimilar(new Name("a a ")));
+			assertTrue(new Name("ab ab ab c").isSimilar(new Name("ab ab ab")));
+		} catch(IllegalValueException e) {
+			System.out.println(e);
+		}
+	}
+	
 }

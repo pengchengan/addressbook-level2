@@ -74,24 +74,22 @@ public class Name {
     	 
     	 String upperCaseName = this.fullName.toUpperCase();
     	 for(int i = 0; i < this.fullName.length(); i++) {
-    		 if(upperCaseName.charAt(i) - 0 > Name.ASCII_START_NUM || upperCaseName.charAt(i) - 0 < Name.ASCII_START_NUM + ALPHABET_COUNT) {
-    			 continue;
-    		 }
-    		 alphabetCount[upperCaseName.charAt(i) - Name.ASCII_START_NUM]++;
+    		 if(upperCaseName.charAt(i) - 0 >= Name.ASCII_START_NUM && upperCaseName.charAt(i) - 0 <= Name.ASCII_START_NUM + ALPHABET_COUNT) {
+    			 alphabetCount[upperCaseName.charAt(i) - Name.ASCII_START_NUM]++;
+    		 }    		 
     	 }
     	 
     	 String otherUpperCaseName = other.fullName.toUpperCase();
-    	 for(int i = 0; i < this.fullName.length(); i++) {
-    		 if(otherUpperCaseName.charAt(i) - 0 > Name.ASCII_START_NUM || otherUpperCaseName.charAt(i) - 0 < Name.ASCII_START_NUM + ALPHABET_COUNT) {
-    			 continue;
+    	 for(int i = 0; i < other.fullName.length(); i++) {
+    		 if(otherUpperCaseName.charAt(i) - 0 >= Name.ASCII_START_NUM && otherUpperCaseName.charAt(i) - 0 <= Name.ASCII_START_NUM + ALPHABET_COUNT) {
+    			 otherAlphabetCount[upperCaseName.charAt(i) - Name.ASCII_START_NUM]++; 
     		 }
-    		 otherAlphabetCount[otherUpperCaseName.charAt(i) - Name.ASCII_START_NUM]++;
     	 }
     	 
     	 int errorFlag = 0;
     	 for(int i = 0; i < Name.ALPHABET_COUNT ; i++) {
     		 if(Math.abs(alphabetCount[i] - otherAlphabetCount[i]) > 1) {
-    			 errorFlag++;
+    			 errorFlag += alphabetCount[i] - otherAlphabetCount[i];
     		 }
     	 }
     	 
