@@ -20,9 +20,9 @@ public class PersonNameTest {
 	@Test
 	public void TestIdentical(){
 		try {
-			assertFalse(new Name("aaa").isSimilar(new Name("aaa")));
-			assertFalse(new Name("a a").isSimilar(new Name("a a")));
-			assertFalse(new Name("ab ab ab").isSimilar(new Name("ab ab ab")));
+			assertTrue(new Name("aaa").isSimilar(new Name("aaa")));
+			assertTrue(new Name("a a").isSimilar(new Name("a a")));
+			assertTrue(new Name("ab ab ab").isSimilar(new Name("ab ab ab")));
 		} catch(IllegalValueException e) {
 			System.out.println(e);
 		}

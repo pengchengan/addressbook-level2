@@ -15,7 +15,11 @@ public class Name {
     public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should be spaces or alphabetic characters";
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alpha} ]+";
     public final String fullName;
-
+    
+    public static final int ASCII_START_NUM = 65;
+    public static final int ASCII_LOW_NUM = 0;
+    public static final int ALPHABET_COUNT = 26;
+    public static final int ERROR_TOLERANCE_NUM = 2;
     /**
      * Validates given name.
      *
@@ -65,6 +69,36 @@ public class Name {
      * Two names are considered similar if ...
      */
      public boolean isSimilar(Name other) {
-    	 return false;
+    	 int[] alphabetCount = new int [26];
+    	 int[] otherAlphabetCount = new int [26];
+    	 
+    	 String upperCaseName = this.fullName.toUpperCase();
+    	 for(int i = 0; i < this.fullName.length(); i++) {
+    		 if(upperCaseName.charAt(i) - 0 > Name.ASCII_START_NUM || upperCaseName.charAt(i) - 0 < Name.ASCII_START_NUM + ALPHABET_COUNT) {
+    			 continue;
+    		 }
+    		 alphabetCount[upperCaseName.charAt(i) - Name.ASCII_START_NUM]++;
+    	 }
+    	 
+    	 String otherUpperCaseName = other.fullName.toUpperCase();
+    	 for(int i = 0; i < this.fullName.length(); i++) {
+    		 if(otherUpperCaseName.charAt(i) - 0 > Name.ASCII_START_NUM || otherUpperCaseName.charAt(i) - 0 < Name.ASCII_START_NUM + ALPHABET_COUNT) {
+    			 continue;
+    		 }
+    		 otherAlphabetCount[otherUpperCaseName.charAt(i) - Name.ASCII_START_NUM]++;
+    	 }
+    	 
+    	 int errorFlag = 0;
+    	 for(int i = 0; i < Name.ALPHABET_COUNT ; i++) {
+    		 if(Math.abs(alphabetCount[i] - otherAlphabetCount[i]) > 1) {
+    			 errorFlag++;
+    		 }
+    	 }
+    	 
+    	 if(errorFlag <= Name.ERROR_TOLERANCE_NUM) {
+    		 return true;
+    	 } else {
+    		 return false;
+    	 }
      }
 }
