@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.addressbook.common.Utils;
-import seedu.addressbook.data.Tagging;
 import seedu.addressbook.data.exception.DuplicateDataException;
 
 import seedu.addressbook.data.tag.Tag;
